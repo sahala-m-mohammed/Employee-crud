@@ -35,7 +35,7 @@ var employees = []EmployeeDB{
 func main() {
 
 	http.HandleFunc("/getEmployee", getEmployee)
-	// http.HandleFunc("/getEmployees", getEmployees)
+	http.HandleFunc("/getEmployees", getEmployees)
 	// http.HandleFunc("/addEmployee", addEmployee)
 	// http.HandleFunc("/deleteEmployee", deleteEmployee)
 	// http.HandleFunc("/updateEmployee", updateEmployee)
@@ -77,11 +77,11 @@ func getEmployee(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(response)
 
 }
-// func getEmployees(w http.ResponseWriter, r *http.Request) {
-// 	w.Header().Set("Content-Type", "application/json")
-// 	w.WriteHeader(http.StatusOK)
-// 	json.NewEncoder(w).Encode(employees)
-// }
+func getEmployees(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(employees)
+}
 
 // func addEmployee(w http.ResponseWriter, r *http.Request) {
 // 	var input []Input
