@@ -37,7 +37,7 @@ func main() {
 	http.HandleFunc("/getEmployee", getEmployee)
 	http.HandleFunc("/getEmployees", getEmployees)
 	http.HandleFunc("/addEmployee", addEmployee)
-	// http.HandleFunc("/deleteEmployee", deleteEmployee)
+	http.HandleFunc("/deleteEmployee", deleteEmployee)
 	// http.HandleFunc("/updateEmployee", updateEmployee)
 
 	// Start the HTTP server
@@ -107,28 +107,28 @@ func addEmployee(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(response)
 }
 
-// func deleteEmployee(w http.ResponseWriter, r *http.Request) {
-// 	var input Input
-// 	err := json.NewDecoder(r.Body).Decode(&input)
-// 	if err != nil {
-// 		http.Error(w, err.Error(), http.StatusBadRequest)
-// 		return
-// 	}
-// 	for i, employee := range employees {
-// 		if employee.ID == input.ID {
-// 			employees = append(employees[:i], employees[i+1:]...)
-// 			break
-// 		}
-// 	}
-// 	response := Response{
-// 		Status:  "success",
-// 		Message: "Deleted successfully",
+func deleteEmployee(w http.ResponseWriter, r *http.Request) {
+	var input Input
+	err := json.NewDecoder(r.Body).Decode(&input)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	for i, employee := range employees {
+		if employee.ID == input.ID {
+			employees = append(employees[:i], employees[i+1:]...)
+			break
+		}
+	}
+	response := Response{
+		Status:  "success",
+		Message: "Deleted successfully",
 
-// 	}
-// 	w.Header().Set("Content-Type", "application/json")
-// 	w.WriteHeader(http.StatusOK)
-// 	json.NewEncoder(w).Encode(response)
-// }
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(response)
+}
 
 // func updateEmployee(w http.ResponseWriter, r *http.Request) {
 // 	var input Input
