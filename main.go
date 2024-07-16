@@ -36,7 +36,7 @@ func main() {
 
 	http.HandleFunc("/getEmployee", getEmployee)
 	http.HandleFunc("/getEmployees", getEmployees)
-	// http.HandleFunc("/addEmployee", addEmployee)
+	http.HandleFunc("/addEmployee", addEmployee)
 	// http.HandleFunc("/deleteEmployee", deleteEmployee)
 	// http.HandleFunc("/updateEmployee", updateEmployee)
 
@@ -83,29 +83,29 @@ func getEmployees(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(employees)
 }
 
-// func addEmployee(w http.ResponseWriter, r *http.Request) {
-// 	var input []Input
-// 	err := json.NewDecoder(r.Body).Decode(&input)
-// 	if err != nil {
-// 		http.Error(w, err.Error(), http.StatusBadRequest)
-// 		return
-// 	}
-// 	for _, data := range input {
-// 		employee := EmployeeDB{
-// 			ID:          data.ID,
-// 			Name:        data.Name,
-// 			Designation: data.Designation,
-// 		}
-// 		employees = append(employees, employee)
-// 	}
-// 	response := Response{
-// 		Status:  "success",
-// 		Message: "Added successfully",
-// 	}
-// 	w.Header().Set("Content-Type", "application/json")
-// 	w.WriteHeader(http.StatusOK)
-// 	json.NewEncoder(w).Encode(response)
-// }
+func addEmployee(w http.ResponseWriter, r *http.Request) {
+	var input []Input
+	err := json.NewDecoder(r.Body).Decode(&input)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	for _, data := range input {
+		employee := EmployeeDB{
+			ID:          data.ID,
+			Name:        data.Name,
+			Designation: data.Designation,
+		}
+		employees = append(employees, employee)
+	}
+	response := Response{
+		Status:  "success",
+		Message: "Added successfully",
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(response)
+}
 
 // func deleteEmployee(w http.ResponseWriter, r *http.Request) {
 // 	var input Input
