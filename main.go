@@ -38,7 +38,7 @@ func main() {
 	http.HandleFunc("/getEmployees", getEmployees)
 	http.HandleFunc("/addEmployee", addEmployee)
 	http.HandleFunc("/deleteEmployee", deleteEmployee)
-	// http.HandleFunc("/updateEmployee", updateEmployee)
+	http.HandleFunc("/updateEmployee", updateEmployee)
 
 	// Start the HTTP server
 	fmt.Println("Server is running on port 8080")
@@ -130,30 +130,30 @@ func deleteEmployee(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(response)
 }
 
-// func updateEmployee(w http.ResponseWriter, r *http.Request) {
-// 	var input Input
-// 	err := json.NewDecoder(r.Body).Decode(&input)
-// 	if err != nil {
-// 		http.Error(w, err.Error(), http.StatusBadRequest)
-// 		return
-// 	}
-// 	for i, n := range employees {
-// 		if employees[i].ID == input.ID {
-// 			employees[i].Name = input.Name
-// 			employees[i].Designation = input.Designation
+func updateEmployee(w http.ResponseWriter, r *http.Request) {
+	var input Input
+	err := json.NewDecoder(r.Body).Decode(&input)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	for i, n := range employees {
+		if employees[i].ID == input.ID {
+			employees[i].Name = input.Name
+			employees[i].Designation = input.Designation
 
-// 			if n.ID == input.ID {
-// 				n.Name = input.Name
-// 				n.Designation = input.Designation
-// 				break
-// 			}
-// 		}
-// 	}
-// 	response := Response{
-// 		Status:  "success",
-// 		Message: "Updated successfully",
-// 	}
-// 	w.Header().Set("Content-Type", "application/json")
-// 	w.WriteHeader(http.StatusOK)
-// 	json.NewEncoder(w).Encode(response)
-// }
+			if n.ID == input.ID {
+				n.Name = input.Name
+				n.Designation = input.Designation
+				break
+			}
+		}
+	}
+	response := Response{
+		Status:  "success",
+		Message: "Updated successfully",
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(response)
+}
